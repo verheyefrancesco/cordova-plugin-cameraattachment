@@ -9,14 +9,14 @@ var exec = require('cordova/exec');
 /**
  * Constructor
  */
-function CameraAttachment() {
+function CameraAttachmentPlugin() {
     this._callback;
 }
 
 /**
  * show - true to show the ad, false to hide the ad
  */
-CameraAttachment.prototype.show = function(options, cb) {
+CameraAttachmentPlugin.prototype.show = function(options, cb) {
     var padDate = function(date) {
       if (date.length == 1) {
         return ("0" + date);
@@ -52,20 +52,20 @@ CameraAttachment.prototype.show = function(options, cb) {
     );
 };
 
-CameraAttachment.prototype._dateSelected = function(date) {
+CameraAttachmentPlugin.prototype._dateSelected = function(date) {
     var d = new Date(parseFloat(date) * 1000);
     if (this._callback)
         this._callback(d);
 }
 
-CameraAttachment.prototype._dateSelectionCanceled = function() {
+CameraAttachmentPlugin.prototype._dateSelectionCanceled = function() {
     if (this._callback)
         this._callback();
 }
 
 
 
-var cameraAttachmentPlugin = new CameraAttachment();
+var cameraAttachmentPlugin = new CameraAttachmentPlugin();
 module.exports = cameraAttachmentPlugin;
 
 // Make plugin work under window.plugins
