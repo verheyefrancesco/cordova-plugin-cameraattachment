@@ -47,7 +47,7 @@
 	    <header-file src="src/ios/CameraAttachmentPlugin.h" />
 	    <source-file src="src/ios/CameraAttachmentPlugin.m" />
         <header-file src="src/ios/CameraAttachmentViewController.h" />
-        <source-file src="src/ios.CameraAttachmentViewController.m" />
+        <source-file src="src/ios/CameraAttachmentViewController.m" />
 		<resource-file src="src/ios/CameraAttachmentViewController.xib" />
 
     </platform>
