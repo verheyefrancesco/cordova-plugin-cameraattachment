@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        id="com.checkroom.plugin.cameraattachment"
+        version="0.4.0">
+
+    <name>CameraAttachment</name>
+	
+    <description>Cordova CameraAttachment Plugin for iOS and Android</description>
+	
+    <license>MIT</license>
+	
+    <keywords>cordova,camera,attachment,ios,ios7,ios8,android</keywords>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="CameraAttachmentPlugin">
+                <param name="android-package" value="com.checkroom.plugin.cameraeattachment.CameraAttachmentPlugin"/>
+            </feature>
+        </config-file>
+		
+        <js-module src="www/android/CameraAttachment.js" name="CameraAttachment">
+            <clobbers target="cameraAttachment" />
+        </js-module>
+
+        <source-file src="src/android/DatePickerPlugin.java" target-dir="src/com/checkroom/plugin/datepicker" />
+        <source-file src="src/android/DateTimePickerConfig.java" target-dir="src/com/checkroom/plugin/datepicker" />
+        <source-file src="src/android/DateTimePickerDialog.java" target-dir="src/com/checkroom/plugin/datepicker" />
+        <source-file src="src/android/res/layout/dialog_date_time.xml" target-dir="res/layout" />
+        <source-file src="src/android/gen/com/cheqroom/plugin/datepicker/R.java" target-dir="gen/com/checkroom/plugin/datepicker" />
+    </platform>
+	
+    <!-- ios -->
+    <platform name="ios">
+
+        <config-file target="config.xml" parent="/*">
+		<feature name="CameraAttachment">
+			<param name="ios-package" value="CameraAttachment"/>
+		</feature>
+        </config-file>
+
+        <js-module src="www/ios/CameraAttachment.js" name="CameraAttachment">
+            <clobbers target="cameraAttachment" />
+        </js-module>
+
+	    <header-file src="src/ios/CameraAttachmentPlugin.h" />
+	    <source-file src="src/ios/CameraAttachmentPlugin.m" />
+        <header-file src="src/ios/CameraAttachmentViewController.h" />
+        <source-file src="src/ios.CameraAttachmentViewController.m" />
+		<resource-file src="src/ios/CameraAttachmentViewController.xib" />
+
+    </platform>
+
+</plugin>
