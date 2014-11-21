@@ -4,7 +4,7 @@
         id="com.checkroom.plugin.cameraattachment"
         version="0.4.0">
 
-    <name>CameraAttachment</name>
+    <name>CameraAttachmentPlugin</name>
 	
     <description>Cordova CameraAttachment Plugin for iOS and Android</description>
 	
@@ -35,13 +35,13 @@
     <platform name="ios">
 
         <config-file target="config.xml" parent="/*">
-		<feature name="CameraAttachment">
-			<param name="ios-package" value="CameraAttachment"/>
+		<feature name="CameraAttachmentPlugin">
+			<param name="ios-package" value="CameraAttachmentPlugin"/>
 		</feature>
         </config-file>
 
-        <js-module src="www/ios/CameraAttachment.js" name="CameraAttachment">
-            <clobbers target="cameraAttachment" />
+        <js-module src="www/ios/CameraAttachmentPlugin.js" name="CameraAttachmentPlugin">
+            <clobbers target="cameraAttachmentPlugin" />
         </js-module>
 
 	    <header-file src="src/ios/CameraAttachmentPlugin.h" />

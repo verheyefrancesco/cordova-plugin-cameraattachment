@@ -46,7 +46,7 @@ CameraAttachment.prototype.show = function(options, cb) {
 
     exec(null, 
       null, 
-      "CameraAttachment", 
+      "CameraAttachmentPlugin", 
       "show",
       [defaults]
     );
@@ -65,13 +65,13 @@ CameraAttachment.prototype._dateSelectionCanceled = function() {
 
 
 
-var cameraAttachment = new CameraAttachment();
-module.exports = cameraAttachment;
+var cameraAttachmentPlugin = new CameraAttachment();
+module.exports = cameraAttachmentPlugin;
 
 // Make plugin work under window.plugins
 if (!window.plugins) {
     window.plugins = {};
 }
-if (!window.plugins.cameraAttachment) {
-    window.plugins.cameraAttachment = cameraAttachment;
+if (!window.plugins.cameraAttachmentPlugin) {
+    window.plugins.cameraAttachmentPlugin = cameraAttachmentPlugin;
 }
