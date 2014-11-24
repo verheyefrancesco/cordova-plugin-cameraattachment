@@ -26,7 +26,7 @@
 
         <source-file src="src/android/CameraAttachmentPlugin.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
         <source-file src="src/android/CameraAttachmentDialog.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
-        <source-file src="src/android/res/layout/camera_attachment_plugin.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/camera_attachment_dialog.xml" target-dir="res/layout" />
         <source-file src="src/android/gen/com/checkroom/plugin/cameraattachment/R.java" target-dir="gen/com/checkroom/plugin/cameraattachment" />
     </platform>
 	
