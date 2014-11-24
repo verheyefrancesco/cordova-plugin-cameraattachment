@@ -20,15 +20,14 @@
             </feature>
         </config-file>
 		
-        <js-module src="www/android/CameraAttachment.js" name="CameraAttachment">
-            <clobbers target="cameraAttachment" />
+        <js-module src="www/android/CameraAttachmentPlugin.js" name="CameraAttachmentPlugin">
+            <clobbers target="cameraAttachmentPlugin" />
         </js-module>
 
-        <source-file src="src/android/DatePickerPlugin.java" target-dir="src/com/checkroom/plugin/datepicker" />
-        <source-file src="src/android/DateTimePickerConfig.java" target-dir="src/com/checkroom/plugin/datepicker" />
-        <source-file src="src/android/DateTimePickerDialog.java" target-dir="src/com/checkroom/plugin/datepicker" />
-        <source-file src="src/android/res/layout/dialog_date_time.xml" target-dir="res/layout" />
-        <source-file src="src/android/gen/com/cheqroom/plugin/datepicker/R.java" target-dir="gen/com/checkroom/plugin/datepicker" />
+        <source-file src="src/android/CameraAttachmentPlugin.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
+        <source-file src="src/android/CameraAttachment.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
+        <source-file src="src/android/res/layout/camera_attachment.xml" target-dir="res/layout" />
+        <source-file src="src/android/gen/com/cheqroom/plugin/cameraattachment/R.java" target-dir="gen/com/checkroom/plugin/cameraattachment" />
     </platform>
 	
     <!-- ios -->
