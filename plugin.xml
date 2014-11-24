@@ -16,7 +16,7 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="CameraAttachmentPlugin">
-                <param name="android-package" value="com.checkroom.plugin.cameraeattachment.CameraAttachmentPlugin"/>
+                <param name="android-package" value="com.checkroom.plugin.cameraattachment.CameraAttachmentPlugin"/>
             </feature>
         </config-file>
 		
