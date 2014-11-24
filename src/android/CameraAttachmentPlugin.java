@@ -13,14 +13,10 @@ import android.widget.RelativeLayout;
 public class CameraAttachmentPlugin extends CordovaPlugin {
 	private final String pluginName = "CameraAttachmentPlugin";
 
-	private static final String ARG_MODE = "mode";
-
-	private RelativeLayout main;
-	private CameraAttachment cameraAttachmentFragment;
+	private CameraAttachmentDialog cameraAttachmentFragment;
 
 	private CallbackContext callbackContext;
-	protected ViewGroup root; // original Cordova layout
-	protected CameraAttachment cameraAttachment; // new layout
+	protected CameraAttachmentDialog cameraAttachment;
 
 	@Override
 	public boolean execute(final String action, final JSONArray data,
@@ -40,7 +36,7 @@ public class CameraAttachmentPlugin extends CordovaPlugin {
 	public synchronized void show(final JSONArray data,
 			final CallbackContext callbackContext) {
 		readParametersFromData(data);
-		showCameraAttachmentFragmeng();
+		showCameraAttachmentDialog();
 	}
 
 	private void readParametersFromData(JSONArray data) {
@@ -52,28 +48,11 @@ public class CameraAttachmentPlugin extends CordovaPlugin {
 		}
 	}
 
-	private void showCameraAttachmentFragmeng() {
-		Runnable runnable = new Runnable() {
-			@Override
-			public void run() {
+	private void showCameraAttachmentDialog() {
+		cameraAttachmentFragment = new CameraAttachmentDialog(
+				cordova.getActivity(),
+				android.R.style.Theme_Black_NoTitleBar_Fullscreen);
 
-				main = new RelativeLayout(cordova.getActivity());
-
-				root = (ViewGroup) webView.getParent();
-				root.removeView(webView);
-				main.addView(webView);
-
-				addCameraAttachmentToLayout();
-
-				cordova.getActivity().setContentView(main);
-			}
-		};
-		cordova.getActivity().runOnUiThread(runnable);
-	}
-
-	private void addCameraAttachmentToLayout() {
-		cameraAttachmentFragment = new CameraAttachment(cordova.getActivity());
-
-		main.addView(cameraAttachment);
+		cameraAttachmentFragment.show();
 	}
 }
