@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CameraAttachmentViewController : UIViewController
+@interface CameraAttachmentViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@property (weak, nonatomic) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end

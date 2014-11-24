@@ -12,26 +12,64 @@
 
 @end
 
-@implementation CameraAttachmentViewController
+@implementation CameraAttachmentViewController{
+    UIImagePickerController *pictureViewController;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
 
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if(!pictureViewController)
+    {
+        [self showTakePictureViewController];
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void) showTakePictureViewController
+{
+    pictureViewController = [[UIImagePickerController alloc] init];
+    pictureViewController.delegate = self;
+    pictureViewController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:pictureViewController animated:NO completion:NULL];
 }
-*/
+
+#pragma mark - Image Picker Controller delegate methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    
+    self.containerView.hidden = NO;
+    [self.activityIndicator startAnimating];
+    self.messageLabel.text = @"Uploading";
+    self.imageView.image = image;
+    
+    [self uploadImage:image];
+    
+    [picker dismissViewControllerAnimated:NO completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+-(void) uploadImage:(UIImage*) image
+{
+    
+}
+
+
 
 @end
