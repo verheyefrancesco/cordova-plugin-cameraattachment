@@ -1,79 +1,26 @@
 package com.checkroom.plugin.cameraattachment;
 
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaPlugin;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.util.Log;
-import android.view.ViewGroup;
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
-public class CameraAttachment extends CordovaPlugin {
-	private final String pluginName = "CameraAttachmentPlugin";
+public class CameraAttachment extends RelativeLayout {
 
-	private static final String ARG_MODE = "mode";
+	private Context mContext;
+	private RelativeLayout mRootLayout;
 
-	private RelativeLayout main;
-	private CameraAttachmentPlugin cameraAttachmentFragment;
-
-	private CallbackContext callbackContext;
-	protected ViewGroup root; // original Cordova layout
-	protected CameraAttachmentPlugin cameraAttachment; // new layout
-
-	@Override
-	public boolean execute(final String action, final JSONArray data,
-			final CallbackContext callbackContext) {
-		Log.d(pluginName, pluginName + " called with options: " + data);
-		boolean result = false;
-
-		this.show(data, callbackContext);
-
-		this.callbackContext = callbackContext;
-
-		result = true;
-
-		return result;
+	public CameraAttachment(Context context) {
+		super(context);
+		mContext = context;
+		create();
 	}
 
-	public synchronized void show(final JSONArray data,
-			final CallbackContext callbackContext) {
-		readParametersFromData(data);
-		showCameraAttachmentFragmeng();
-	}
+	private void create() {
+		LayoutInflater inflater = (LayoutInflater) mContext
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-	private void readParametersFromData(JSONArray data) {
-		try {
-			JSONObject obj = data.getJSONObject(0);
-
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void showCameraAttachmentFragmeng() {
-		Runnable runnable = new Runnable() {
-			@Override
-			public void run() {
-
-				main = new RelativeLayout(cordova.getActivity());
-
-				root = (ViewGroup) webView.getParent();
-				root.removeView(webView);
-				main.addView(webView);
-
-				addCameraAttachmentToLayout();
-
-				cordova.getActivity().setContentView(main);
-			}
-		};
-		cordova.getActivity().runOnUiThread(runnable);
-	}
-
-	private void addCameraAttachmentToLayout() {
-		cameraAttachmentFragment = new CameraAttachmentPlugin(cordova.getActivity());
-
-		main.addView(cameraAttachment);
+		mRootLayout = (RelativeLayout) inflater.inflate(
+				R.layout.camera_attachment, this, false);
+		this.addView(mRootLayout);
 	}
 }
