@@ -42,7 +42,7 @@ CameraAttachmentPlugin.prototype._photoUploaded = function(result) {
         this._callback(d);
 }
 
-CameraAttachmentPlugin.prototype._photoUploadedCanceled = function() {
+CameraAttachmentPlugin.prototype._photoUploadCanceled = function() {
     if (this._callback)
         this._callback();
 }
