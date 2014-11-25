@@ -17,25 +17,9 @@ function CameraAttachmentPlugin() {
  * show - true to show the ad, false to hide the ad
  */
 CameraAttachmentPlugin.prototype.show = function(options, cb) {
-    var padDate = function(date) {
-      if (date.length == 1) {
-        return ("0" + date);
-      }
-      return date;
-    };
 
     var defaults = {
-        mode : 'date',
-        date : -1,
-        minDate: -1,
-        maxDate: -1,
-        minuteInterval:1,
-        positiveButtonText: 'Set',
-        negativeButtonText: 'Cancel',
-        setDateTitle: 'Set date',
-        setTimeTitle: 'Set time',
-        x: '0',
-        y: '0',
+        uploadUrl : 'your_upload_url'
     };
 
     for (var key in defaults) {
