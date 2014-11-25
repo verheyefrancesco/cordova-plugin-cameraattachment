@@ -52,13 +52,13 @@ CameraAttachmentPlugin.prototype.show = function(options, cb) {
     );
 };
 
-CameraAttachmentPlugin.prototype._dateSelected = function(date) {
+CameraAttachmentPlugin.prototype._photoUploaded = function(result) {
     var d = new Date(parseFloat(date) * 1000);
     if (this._callback)
         this._callback(d);
 }
 
-CameraAttachmentPlugin.prototype._dateSelectionCanceled = function() {
+CameraAttachmentPlugin.prototype._photoUploadedCanceled = function() {
     if (this._callback)
         this._callback();
 }

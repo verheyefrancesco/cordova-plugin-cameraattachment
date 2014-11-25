@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <Cordova/CDV.h>
+#import "CameraAttachmentViewController.h"
 
-@interface CameraAttachmentPlugin : CDVPlugin
+@interface CameraAttachmentPlugin : CDVPlugin <CameraAttachmentViewControllerDelegate>
 
 - (void)show:(CDVInvokedUrlCommand*)command;
 

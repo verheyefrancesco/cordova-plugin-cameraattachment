@@ -13,7 +13,8 @@
 @end
 
 @implementation CameraAttachmentViewController{
-    UIImagePickerController *pictureViewController;
+    UIImagePickerController *_pictureViewController;
+    PhotoUploader *_uploader;
 }
 
 - (void)viewDidLoad {
@@ -25,7 +26,7 @@
 {
     [super viewDidAppear:animated];
     
-    if(!pictureViewController)
+    if(!_pictureViewController)
     {
         [self showTakePictureViewController];
     }
@@ -37,39 +38,49 @@
 
 - (void) showTakePictureViewController
 {
-    pictureViewController = [[UIImagePickerController alloc] init];
-    pictureViewController.delegate = self;
-    pictureViewController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    _pictureViewController = [[UIImagePickerController alloc] init];
+    _pictureViewController.delegate = self;
+    _pictureViewController.sourceType = UIImagePickerControllerSourceTypeCamera;
     
-    [self presentViewController:pictureViewController animated:NO completion:NULL];
+    [self presentViewController:_pictureViewController animated:NO completion:NULL];
 }
 
 #pragma mark - Image Picker Controller delegate methods
-
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *image = info[UIImagePickerControllerOriginalImage];
-    
+    self.imageView.image = image;
     self.containerView.hidden = NO;
     [self.activityIndicator startAnimating];
     self.messageLabel.text = @"Uploading";
-    self.imageView.image = image;
-    
-    [self uploadImage:image];
     
     [picker dismissViewControllerAnimated:NO completion:NULL];
+    
+    [self uploadImage:image];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    if(self.delegate)
+    {
+        [self.delegate cameraAttachmentVC:self onClosed:YES andUploadResult:nil];
+    }
 }
 
--(void) uploadImage:(UIImage*) image
+-(void) uploadImage:(UIImage*)image
 {
-    
+    _uploader = [[PhotoUploader alloc] init];
+    _uploader.delegate = self;
+    [_uploader uploadImage:image andImageWidth:1024 andImageHeight:720 toUrl:self.uploadUrl];
 }
 
-
+#pragma mark - PhotoUploaderDelegate
+-(void) photoUploader:(PhotoUploader *)photoUploader didUploadWithResult:(NSString *)result andSuccess:(BOOL)success
+{
+    if(self.delegate)
+    {
+        [self.delegate cameraAttachmentVC:self onClosed:NO andUploadResult:result];
+    }
+}
 
 @end
