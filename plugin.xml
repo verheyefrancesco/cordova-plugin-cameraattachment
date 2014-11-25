@@ -19,17 +19,18 @@
                 <param name="android-package" value="com.checkroom.plugin.cameraattachment.CameraAttachmentPlugin"/>
             </feature>
         </config-file>
-		
+    
         <js-module src="www/android/CameraAttachmentPlugin.js" name="CameraAttachmentPlugin">
             <clobbers target="cameraAttachmentPlugin" />
         </js-module>
-
+    
         <source-file src="src/android/CameraAttachmentPlugin.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
         <source-file src="src/android/CameraAttachmentDialog.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
+        <source-fiel src="src/android/BitmapUtils.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
+        <source-fiel src="src/android/UploadImageTask.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
         <source-file src="src/android/res/layout/camera_attachment_dialog.xml" target-dir="res/layout" />
         <source-file src="src/android/gen/com/checkroom/plugin/cameraattachment/R.java" target-dir="gen/com/checkroom/plugin/cameraattachment" />
     </platform>
-	
     <!-- ios -->
     <platform name="ios">
 

@@ -16,15 +16,7 @@ function CameraAttachment() {
 CameraAttachment.prototype.show = function(options, cb) {
   
 	var defaults = {
-        mode : 'date',
-        date : -1,
-        minDate: -1,
-        maxDate: -1,
-        minuteInterval:1,
-        positiveButtonText: 'Set',
-        negativeButtonText: 'Cancel',
-        setDateTitle: 'Set date',
-        setTimeTitle: 'Set time'
+        uploadUrl : 'your_upload_url'
     };
 
 	for (var key in defaults) {
@@ -36,9 +28,8 @@ CameraAttachment.prototype.show = function(options, cb) {
 	//this._callback = cb;
 
 	var callback = function(message) {
-		var timestamp = Date.parse(message);
-		if(isNaN(timestamp) == false) {
-			cb(new Date(message));
+		if(isNaN(message) == false) {
+			cb(message);
 		}
 	}
   
