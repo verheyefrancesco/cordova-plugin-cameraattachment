@@ -15,6 +15,17 @@
 @implementation CameraAttachmentViewController{
     UIImagePickerController *_pictureViewController;
     PhotoUploader *_uploader;
+    CameraAttachmentConfig *_config;
+}
+
+-(instancetype) initWithConfig:(CameraAttachmentConfig*)config
+{
+    self = [super init];
+    if(self)
+    {
+        _config = config;
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
@@ -52,7 +63,7 @@
     self.imageView.image = image;
     self.containerView.hidden = NO;
     [self.activityIndicator startAnimating];
-    self.messageLabel.text = @"Uploading";
+    self.messageLabel.text = _config.uploadingMessage;
     
     [picker dismissViewControllerAnimated:NO completion:NULL];
     
@@ -71,7 +82,14 @@
 {
     _uploader = [[PhotoUploader alloc] init];
     _uploader.delegate = self;
-    [_uploader uploadImage:image andImageWidth:1024 andImageHeight:720 toUrl:self.uploadUrl];
+    
+    if(_config.photoSizeHeight != -1 && _config.photoSizeWidth != -1)
+    {
+        [_uploader uploadImage:image andImageWidth:_config.photoSizeWidth andImageHeight:_config.photoSizeHeight toUrl:_config.uploadUrl];
+    } else
+    {
+        [_uploader uploadImage:image toUrl:_config.uploadUrl];
+    }
 }
 
 #pragma mark - PhotoUploaderDelegate

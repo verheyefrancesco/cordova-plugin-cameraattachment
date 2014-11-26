@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PhotoUploader.h"
+#import "CameraAttachmentConfig.h"
 
 @class CameraAttachmentViewController;
 
@@ -20,6 +21,8 @@
 
 @interface CameraAttachmentViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, PhotoUploaderDelegate>
 
+-(instancetype) initWithConfig:(CameraAttachmentConfig*)config;
+
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
@@ -27,6 +30,5 @@
 
 @property (nonatomic) id<CameraAttachmentViewControllerDelegate> delegate;
 
-@property(nonatomic) NSString* uploadUrl;
 
 @end

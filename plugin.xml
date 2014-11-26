@@ -50,6 +50,8 @@
         <source-file src="src/ios/CameraAttachmentViewController.m" />
         <header-file src="src/ios/PhotoUploader.h" />
         <source-file src="src/ios/PhotoUploader.m" />
+        <header-file src="src/ios/CameraAttachmentConfig.h" />
+        <source-file src="src/ios/CameraAttachmentConfig.m" />
 		<resource-file src="src/ios/CameraAttachmentViewController.xib" />
 
     </platform>

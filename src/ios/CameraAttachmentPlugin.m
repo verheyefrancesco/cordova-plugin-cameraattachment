@@ -7,41 +7,38 @@
 //
 
 #import "CameraAttachmentPlugin.h"
+#import "CameraAttachmentConfig.h"
 
 @implementation CameraAttachmentPlugin{
     CameraAttachmentViewController *_cameraAttachmentViewController;
-    NSString *_uploadUrl;
+    CameraAttachmentConfig *_config;
 }
 
 - (void)show:(CDVInvokedUrlCommand*)command
 {
     NSMutableDictionary *options = [command argumentAtIndex:0];
     
-    [self readPamaretersFromOptions:options];
+    [self createConfigWithOptions:options];
     
     [self showCameraAttachmentViewController];
-}
-
--(void) readPamaretersFromOptions:(NSMutableDictionary*)options
-{
-    if([options objectForKey:@"uploadUrl"])
-    {
-        _uploadUrl = [options objectForKey:@"uploadUrl"];
-    }
     
     /*
-    // B-OFFICE
-    _uploadUrl = @"http://10.0.1.31:8500/upload/upload";
-    // C-OFFICE
-    _uploadUrl = @"http://192.168.9.108/upload/upload";
+     // B-OFFICE
+     _uploadUrl = @"http://10.0.1.31:8500/upload/upload";
+     // C-OFFICE
+     _uploadUrl = @"http://192.168.9.108/upload/upload";
      */
+}
+
+-(void) createConfigWithOptions:(NSMutableDictionary*)options
+{
+    _config = [[CameraAttachmentConfig alloc] initWithDictionary:options];
 }
 
 -(void) showCameraAttachmentViewController
 {
-    _cameraAttachmentViewController = [[CameraAttachmentViewController alloc] init];
+    _cameraAttachmentViewController = [[CameraAttachmentViewController alloc] initWithConfig:_config];
     _cameraAttachmentViewController.delegate = self;
-    _cameraAttachmentViewController.uploadUrl = _uploadUrl;
     [self.viewController presentViewController:_cameraAttachmentViewController animated:YES completion:nil];
 }
 

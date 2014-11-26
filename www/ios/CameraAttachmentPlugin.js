@@ -1,4 +1,4 @@
-/**
+cordova.define("com.checkroom.plugin.cameraattachment.CameraAttachmentPlugin", function(require, exports, module) { /**
   Phonegap CameraAttachment Plugin
   https://github.com/francescobitmunks/cordova-plugin-cameraattachment
 
@@ -19,7 +19,12 @@ function CameraAttachmentPlugin() {
 CameraAttachmentPlugin.prototype.show = function(options, cb) {
 
     var defaults = {
-        uploadUrl : 'your_upload_url'
+        uploadUrl : 'your_upload_url',
+        cancelButtonText : 'Cancel',
+        usePhotoButtonText : 'Use Photo',
+        retakeButtonText : 'Retake',
+        photoSizeWidth: -1,
+        photoSizeHeight: -1
     };
 
     for (var key in defaults) {
@@ -37,9 +42,8 @@ CameraAttachmentPlugin.prototype.show = function(options, cb) {
 };
 
 CameraAttachmentPlugin.prototype._photoUploaded = function(result) {
-    var d = new Date(parseFloat(date) * 1000);
     if (this._callback)
-        this._callback(d);
+        this._callback(result);
 }
 
 CameraAttachmentPlugin.prototype._photoUploadCanceled = function() {
@@ -59,3 +63,4 @@ if (!window.plugins) {
 if (!window.plugins.cameraAttachmentPlugin) {
     window.plugins.cameraAttachmentPlugin = cameraAttachmentPlugin;
 }
+});
