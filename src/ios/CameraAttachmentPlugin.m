@@ -59,14 +59,14 @@
 #pragma mark - JS API
 -(void) jsUploadCancelled
 {
-    NSString* jsCallback = @"datePicker._photoUploadedCanceled();";
+    NSString* jsCallback = @"cameraAttachmentPlugin._photoUploadCanceled();";
     [self.commandDelegate evalJs:jsCallback];
 }
+
 - (void)jsUploadWithResult:(NSString*)result
 {
-    NSString* jsCallback = [NSString stringWithFormat:@"datePicker._photoUploaded(\"%@\");", result];
-    //NSLog(jsCallback);
-    //[super writeJavascript:jsCallback];
+    result = [result stringByReplacingOccurrencesOfString:@"\"" withString:@"&#34;"];
+    NSString* jsCallback = [NSString stringWithFormat:@"cameraAttachmentPlugin._photoUploaded(\"%@\");", result];
     [self.commandDelegate evalJs:jsCallback];
 }
 

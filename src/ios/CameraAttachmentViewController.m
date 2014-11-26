@@ -24,6 +24,9 @@
     if(self)
     {
         _config = config;
+        
+        //_config.photoSizeWidth = -1;
+        //_config.photoSizeHeight = -1;
     }
     return self;
 }
@@ -70,11 +73,12 @@
     [self uploadImage:image];
 }
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+-(void) imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
+    [picker dismissViewControllerAnimated:NO completion:nil];
     if(self.delegate)
     {
-        [self.delegate cameraAttachmentVC:self onClosed:YES andUploadResult:nil];
+        [self.delegate cameraAttachmentVC:self onClosed:YES andUploadResult:@""];
     }
 }
 
@@ -85,7 +89,15 @@
     
     if(_config.photoSizeHeight != -1 && _config.photoSizeWidth != -1)
     {
-        [_uploader uploadImage:image andImageWidth:_config.photoSizeWidth andImageHeight:_config.photoSizeHeight toUrl:_config.uploadUrl];
+        UIImageOrientation orient = image.imageOrientation;
+        
+        if(orient == UIImageOrientationUp || orient == UIImageOrientationUpMirrored || orient == UIImageOrientationDown || orient == UIImageOrientationDownMirrored)
+        {
+            [_uploader uploadImage:image andImageWidth:_config.photoSizeWidth andImageHeight:_config.photoSizeHeight toUrl:_config.uploadUrl];
+        } else
+        {
+            [_uploader uploadImage:image andImageWidth:_config.photoSizeHeight andImageHeight:_config.photoSizeWidth toUrl:_config.uploadUrl];
+        }
     } else
     {
         [_uploader uploadImage:image toUrl:_config.uploadUrl];
