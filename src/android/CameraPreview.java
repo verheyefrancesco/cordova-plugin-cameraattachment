@@ -124,4 +124,8 @@ public class CameraPreview extends SurfaceView implements
 			Log.d("DBG", "Error starting camera preview: " + e.getMessage());
 		}
 	}
+	
+	public void setCamera(Camera camera){
+		mCamera = camera;
+	}
 }

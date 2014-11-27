@@ -1,22 +1,23 @@
-/**
- * Phonegap DatePicker Plugin Copyright (c) Greg Allen 2011 MIT Licensed
- * Reused and ported to Android plugin by Daniel van 't Oever
- */
 
 /**
  * Constructor
  */
-function CameraAttachment() {
+function CameraAttachmentPlugin() {
   //this._callback;
 }
 
 /**
  * show - true to show the ad, false to hide the ad
  */
-CameraAttachment.prototype.show = function(options, cb) {
+CameraAttachmentPlugin.prototype.show = function(options, cb) {
   
 	var defaults = {
-        uploadUrl : 'your_upload_url'
+        uploadUrl : 'your_upload_url',
+        cancelButtonText : 'Cancel',
+        usePhotoButtonText : 'Use Photo',
+        retakeButtonText : 'Retake',
+        photoSizeWidth: -1,
+        photoSizeHeight: -1
     };
 
 	for (var key in defaults) {
@@ -28,20 +29,34 @@ CameraAttachment.prototype.show = function(options, cb) {
 	//this._callback = cb;
 
 	var callback = function(message) {
-		if(isNaN(message) == false) {
-			cb(message);
+		cb(message);
+		/*
+		var status = '' + status;
+		var result = '' + data;
+
+		if(status == 'cancelled'){
+			cb('{\'status\': \'cancelled\'}');
 		}
+
+		if(isNaN(code) == true){
+			var returnMessage = '{\'status\': \'' + status + '\', \'data\': \'' + data + '\'}';
+			cb(returnMessage);
+		} else{
+			var returnMessage = '{\'status\': \'' + status + '\', \'data\': \'' + data + '\', \'code\': \'' + code + '\'}';
+			cb(returnMessage);
+		}
+		*/
 	}
   
 	cordova.exec(callback, 
 		null, 
 		"CameraAttachmentPlugin", 
-		defaults.mode,
+		defaults.uploadUrl,
 		[defaults]
 	);
 };
 
-var cameraAttachment = new CameraAttachment();
+var cameraAttachment = new CameraAttachmentPlugin();
 module.exports = cameraAttachment;
 
 // Make plugin work under window.plugins

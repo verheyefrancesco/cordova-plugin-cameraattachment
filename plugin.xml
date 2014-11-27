@@ -19,6 +19,15 @@
                 <param name="android-package" value="com.checkroom.plugin.cameraattachment.CameraAttachmentPlugin"/>
             </feature>
         </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-feature android:name="android.hardware.camera" />
+            <uses-feature
+                android:name="android.hardware.camera.autofocus"
+                android:required="false" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        </config-file>
     
         <js-module src="www/android/CameraAttachmentPlugin.js" name="CameraAttachmentPlugin">
             <clobbers target="cameraAttachmentPlugin" />
@@ -26,10 +35,16 @@
     
         <source-file src="src/android/CameraAttachmentPlugin.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
         <source-file src="src/android/CameraAttachmentDialog.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
-        <source-fiel src="src/android/BitmapUtils.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
-        <source-fiel src="src/android/UploadImageTask.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
+        <source-file src="src/android/CameraAttachmentConfig.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
+        <source-file src="src/android/CameraPreview.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
+        <source-file src="src/android/BitmapUtils.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
+        <source-file src="src/android/UploadImageTask.java" target-dir="src/com/checkroom/plugin/cameraattachment" />
+        
         <source-file src="src/android/res/layout/camera_attachment_dialog.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/drawable-hdpi/ic_action_camera.png" target-dir="res/drawable-hdpi" />
+        
         <source-file src="src/android/gen/com/checkroom/plugin/cameraattachment/R.java" target-dir="gen/com/checkroom/plugin/cameraattachment" />
+        
     </platform>
     <!-- ios -->
     <platform name="ios">

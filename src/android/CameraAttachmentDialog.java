@@ -44,7 +44,7 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 	private CameraPreview mPreview;
 	private Handler autoFocusHandler;
 
-	public String uploadurl;
+	private CameraAttachmentConfig mConfig;
 
 	private Bitmap mBitmap;
 
@@ -58,6 +58,10 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 		mContext = context;
 		mCallback = callback;
 		setCancelable(false);
+	}
+
+	public void setConfig(CameraAttachmentConfig config) {
+		mConfig = config;
 	}
 
 	@Override
@@ -100,13 +104,19 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 		pbUploading = (ProgressBar) findViewById(getIdFromProjectsRFile(
 				RESOURCE_TYPE_ID, "pbCameraAttachmentPluginUpLoading"));
 
+		btnLeftAction.setText(mConfig.getCancelButtonText());
+		btnUsePhoto.setText(mConfig.getUsePhotoButtonText());
+
 		btnLeftAction.setOnClickListener(this);
 		btnTakePicture.setOnClickListener(this);
 		btnUsePhoto.setOnClickListener(this);
 	}
 
-	protected void setupAutoFocus() {
-		// Focus handler
+	/*
+	 * Camera helper
+	 */
+
+	private void setupAutoFocus() {
 		autoFocusHandler = new Handler();
 		if (mCamera == null) {
 			mCamera = getCameraInstance();
@@ -117,14 +127,8 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 		mCamera.setPreviewCallback(this);
 		mCamera.startPreview();
 		previewing = true;
-		// preview does the autoFocus(autoFocusCB); when the SurfaceHolder of
-		// the CameraPreview is created
-		// mCamera.autoFocus(autoFocusCB);
 	}
 
-	/*
-	 * Camera helper
-	 */
 	public static Camera getCameraInstance() {
 		Camera c = null;
 		try {
@@ -140,12 +144,15 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 			mCamera.setPreviewCallback(null);
 			mCamera.release();
 			mCamera = null;
+
+			mPreview.setCamera(null);
+			if (mCamera != null) {
+				mCamera.release();
+				mCamera = null;
+			}
 		}
 	}
 
-	/*
-	 * Autofocus
-	 */
 	AutoFocusCallback autoFocusCB = new AutoFocusCallback() {
 		public void onAutoFocus(boolean success, Camera camera) {
 			autoFocusHandler.postDelayed(doAutoFocus, 1000);
@@ -193,9 +200,10 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 		}
 		if (v.getId() == getIdFromProjectsRFile(RESOURCE_TYPE_ID,
 				"btnCameraAttachmentPluginLeftAction")) {
-			if (btnLeftAction.getText().equals("Cancel")) {
+			if (btnLeftAction.getText().equals(mConfig.getCancelButtonText())) {
 				cancelTakingPicture();
-			} else if (btnLeftAction.getText().equals("Retake")) {
+			} else if (btnLeftAction.getText().equals(
+					mConfig.getRetakeButtonText())) {
 				retake();
 			}
 		}
@@ -208,7 +216,7 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 
 	private void takePicture() {
 		mCamera.takePicture(null, null, mPictureCallback);
-		btnLeftAction.setText("Retake");
+		btnLeftAction.setText(mConfig.getRetakeButtonText());
 		btnLeftAction.setVisibility(View.VISIBLE);
 		btnTakePicture.setVisibility(View.INVISIBLE);
 		btnUsePhoto.setVisibility(View.VISIBLE);
@@ -236,8 +244,8 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 	}
 
 	private void upload() {
-		UploadImageTask uploadTask = new UploadImageTask(this, uploadurl,
-				mBitmap);
+		UploadImageTask uploadTask = new UploadImageTask(this,
+				mConfig.getUploadUrl(), mBitmap);
 		uploadTask.execute(new String[] {});
 	}
 
@@ -245,7 +253,6 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 
 		@Override
 		public void onPictureTaken(byte[] data, Camera camera) {
-
 			mBitmap = BitmapFactory.decodeByteArray(data, 0, data.length, null);
 			try {
 				FileOutputStream out = new FileOutputStream(Environment
@@ -269,6 +276,7 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 	/* UploadImageTaskCallback callback */
 	@Override
 	public void onUploadCompleted(boolean success, String result) {
+		pause();
 		mCallback.onUploadedWithResult(result);
 	}
 

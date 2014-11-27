@@ -20,11 +20,8 @@ import android.util.Log;
 
 public class UploadImageTask extends AsyncTask<String, Void, String> {
 
-	private InputStream inputStream;
 	private String mUrl;
-
 	private Bitmap mBitmap;
-
 	private UploadImageTaskCallback mCallback;
 
 	public UploadImageTask(UploadImageTaskCallback callback, String url,
@@ -51,9 +48,6 @@ public class UploadImageTask extends AsyncTask<String, Void, String> {
 			HttpPost httppost = new HttpPost(mUrl);
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);
-			// HttpEntity entity = response.getEntity();
-			// InputStream is = entity.getContent();
-
 			String result = convertResponseToString(response);
 			return result;
 		} catch (Exception e) {
@@ -62,29 +56,25 @@ public class UploadImageTask extends AsyncTask<String, Void, String> {
 		return null;
 	}
 
-	private String convertResponseToString(HttpResponse response)
-			throws IllegalStateException, IOException {
+	private String convertResponseToString(HttpResponse response) {
 		String res = "";
 		StringBuffer buffer = new StringBuffer();
-		inputStream = response.getEntity().getContent();
-		int contentLength = (int) response.getEntity().getContentLength();
-		if (contentLength < 0) {
-		} else {
-			byte[] data = new byte[512];
-			int len = 0;
-			try {
+		try {
+			InputStream inputStream = response.getEntity().getContent();
+			int contentLength = (int) response.getEntity().getContentLength();
+			if (contentLength >= 0) {
+				byte[] data = new byte[512];
+				int len = 0;
 				while (-1 != (len = inputStream.read(data))) {
 					buffer.append(new String(data, 0, len));
 				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
 				inputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+				res = buffer.toString();
 			}
-			res = buffer.toString();
+		} catch (IllegalStateException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 		return res;
 	}
