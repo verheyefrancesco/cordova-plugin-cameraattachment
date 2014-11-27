@@ -1,4 +1,4 @@
-# PictureAttachment Plugin for Cordova/PhoneGap 3.0 (iOS and Android)
+# CameraAttachment Plugin for Cordova/PhoneGap 3.0 (iOS and Android)
 
 
 ## Installation
@@ -8,66 +8,60 @@
 2) Add a plugin to your project using Cordova CLI:
 
 ```bash
-cordova plugin add https://github.com/VitaliiBlagodir/cordova-plugin-datepicker
+cordova plugin add https://github.com/francescobitmunks/cordova-plugin-cameraattachment
 ```
 Or using PhoneGap CLI:
 
 ```bash
-phonegap local plugin add https://github.com/VitaliiBlagodir/cordova-plugin-datepicker
+phonegap local plugin add https://github.com/francescobitmunks/cordova-plugin-cameraattachment
 ```
 
 ## Usage
 
 ```js
-var date = new Date().getTime();
-var minDate = new Date('November 18, 2014 11:15:00').getTime();
-var maxDate = new Date('March 25, 2015 23:55:00').getTime();var minuteInterval = 5;
-var positiveButtonText = 'Ok';
-var negativeButtonText = 'Annuleer';
-var setDateTitle = 'Datum instellen';
-var setTimeTitle = 'Tijd instellen';
+var uploadUrl = 'http://10.0.1.31:8500/upload/upload';
+var cancelButtonText = 'Cancel';
+var usePhotoButtonText = 'Use Photo';
+var retakeButtonText = 'Retake';
+var photoSizeWidth = 300;
+var photoSizeHeight = 400;
             
 var options = {
-	mode: mode,
-    date: date,
-    minDate: minDate,
-    maxDate: maxDate,
-    minuteInterval: minuteInterval,
-    positiveButtonText: positiveButtonText,
-    negativeButtonText: negativeButtonText,
-    setDateTitle: setDateTitle,
-    setTimeTitle: setTimeTitle
+    uploadUrl: uploadUrl,
+    cancelButtonText: cancelButtonText,
+    usePhotoButtonText: usePhotoButtonText,
+    retakeButtonText: retakeButtonText,
+    photoSizeWidth: photoSizeWidth,
+    photoSizeHeight: photoSizeHeight
 };
 
-datePicker.show(options, function(date){
-	alert("date result " + date);  
+cameraAttachmentPlugin.show(options, function(result){
+    alert("upload result: " + result);  
 });
 ```
 
 ## Options
 
-### mode - iOS, Android
-The mode of the date picker.
+### uploadUrl - iOS, Android
+The url to upload the base64 image.
 
 Type: String
 
-Values: `date` | `time` | `datetime`
+Default: `your_upload_url`
 
-Default: `date`
+### cancelButtonText - Android
+Label for cancel button.
 
-### date - iOS, Android
-Selected date.
+Type: String
 
-Type: long
+Default: `Cancel`
 
-Default: `-1 (will use current date/time)`
+### usePhotoButtonText - Android
+Label to confirm to use the photo.
 
-### minDate - iOS, Android
-Minimum date.
+Type: String
 
-Type: long
-
-Default: `-1`
+Default: `Use Photo`
 
 ### maxDate - iOS, Android
 Maximum date.

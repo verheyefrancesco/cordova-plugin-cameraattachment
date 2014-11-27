@@ -18,15 +18,13 @@ public class CameraAttachmentPlugin extends CordovaPlugin implements
 	private static final String ARG_CANCEL_BUTTON_TEXT = "cancelButtonText";
 	private static final String ARG_USE_PHOTO_BUTTON_TEXT = "usePhotoButtonText";
 	private static final String ARG_RETAKE_BUTTON_TEXT = "retakeButtonText";
-	private static final String ARG_PHOTO_SIZE_WIDTH = "photoSizeWidth";
-	private static final String ARG_PHOTO_SIZE_HEIGHT = "photoSizeHeight";
+	private static final String ARG_PHOTO_SIZE = "photoSize";
 
 	private String uploadUrl;
 	private String cancelButtonText = "Cancel";
 	private String usePhotoButtonText = "Use Photo";
 	private String retakeButtonText = "Retake";
-	private int photoSizeWidth = -1;
-	private int photoSizeHeight = -1;
+	private String photoSize = "medium";
 
 	private CameraAttachmentConfig mConfig;
 
@@ -72,11 +70,8 @@ public class CameraAttachmentPlugin extends CordovaPlugin implements
 			if (obj.has(ARG_RETAKE_BUTTON_TEXT)) {
 				retakeButtonText = obj.getString(ARG_RETAKE_BUTTON_TEXT);
 			}
-			if (obj.has(ARG_PHOTO_SIZE_WIDTH)) {
-				photoSizeWidth = obj.getInt(ARG_PHOTO_SIZE_WIDTH);
-			}
-			if (obj.has(ARG_PHOTO_SIZE_HEIGHT)) {
-				photoSizeHeight = obj.getInt(ARG_PHOTO_SIZE_HEIGHT);
+			if (obj.has(ARG_PHOTO_SIZE)) {
+				photoSize = obj.getString(ARG_PHOTO_SIZE);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -85,8 +80,7 @@ public class CameraAttachmentPlugin extends CordovaPlugin implements
 
 	private void createConfig() {
 		mConfig = new CameraAttachmentConfig(uploadUrl, cancelButtonText,
-				usePhotoButtonText, retakeButtonText, photoSizeWidth,
-				photoSizeHeight);
+				usePhotoButtonText, retakeButtonText, photoSize);
 	}
 
 	private void showCameraAttachmentDialog() {
@@ -105,14 +99,21 @@ public class CameraAttachmentPlugin extends CordovaPlugin implements
 	/* CameraAttachmentCallback */
 	@Override
 	public void onCancelled() {
-		callbackContext.success("cancelled");
+		String message = "{'status': 'cancelled'}";
+		callbackContext.success(message);
 		cameraAttachmentDialog.dismiss();
 	}
 
 	@Override
-	public void onUploadedWithResult(String result) {
-		callbackContext.success(result);
+	public void onUploadedWithResult(String result, int httpStatusCode) {
+		String message = "{'status': 'success', 'data' : '" + result
+				+ "', 'code':'" + httpStatusCode + "'}";
+		callbackContext.success(message);
 		cameraAttachmentDialog.dismiss();
-
 	}
+
+	// success {status: 'success', data: somedatadict}
+	// error {status: 'error', code: 500, data: 'some error message'}
+	// cancel {status: 'cancelled'}
+	// system {status: 'system', code: 999, data: 'No more disk space'}
 }

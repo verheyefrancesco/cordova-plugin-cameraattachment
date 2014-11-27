@@ -6,18 +6,15 @@ public class CameraAttachmentConfig {
 	private String cancelButtonText = "Cancel";
 	private String usePhotoButtonText = "Use Photo";
 	private String retakeButtonText = "Retake";
-	private int photoSizeWidth = -1;
-	private int photoSizeHeigth = -1;
+	private String photoSize = "medium"; // "small" - "medium" - "large"
 
 	public CameraAttachmentConfig(String uploadUrl, String cancelButtonText,
-			String usePhotoButtonText, String retakeButtonText,
-			int photoSizeWidth, int photoSizeHeight) {
+			String usePhotoButtonText, String retakeButtonText, String photoSize) {
 		this.uploadUrl = uploadUrl;
 		this.cancelButtonText = cancelButtonText;
 		this.usePhotoButtonText = usePhotoButtonText;
 		this.retakeButtonText = retakeButtonText;
-		this.photoSizeWidth = photoSizeWidth;
-		this.photoSizeHeigth = photoSizeHeight;
+		this.photoSize = photoSize;
 	}
 
 	public String getUploadUrl() {
@@ -36,11 +33,19 @@ public class CameraAttachmentConfig {
 		return retakeButtonText;
 	}
 
-	public int getPhotoSizeWidth() {
-		return photoSizeWidth;
+	public String getPhotoSize() {
+		return photoSize;
 	}
 
-	public int getPhotoSizeHeight() {
-		return photoSizeHeigth;
+	public boolean isPhotoSizeLarge() {
+		return photoSize.equals("large");
+	}
+
+	public boolean isPhotoSizeMedium() {
+		return photoSize.equals("medium");
+	}
+
+	public boolean isPhotoSizeSmall() {
+		return photoSize.equals("small");
 	}
 }

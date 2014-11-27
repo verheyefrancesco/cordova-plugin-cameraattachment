@@ -1,6 +1,5 @@
 package com.checkroom.plugin.cameraattachment;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,47 +9,47 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.util.Base64;
 import android.util.Log;
 
 public class UploadImageTask extends AsyncTask<String, Void, String> {
 
 	private String mUrl;
-	private Bitmap mBitmap;
 	private UploadImageTaskCallback mCallback;
+	private String imageBase64;
+	private int httpStatusCode;
 
 	public UploadImageTask(UploadImageTaskCallback callback, String url,
-			Bitmap bitmap) {
+			String imageBase64) {
 		mUrl = url;
-		mBitmap = bitmap;
 		mCallback = callback;
+		this.imageBase64 = imageBase64;
 	}
 
 	@Override
 	protected String doInBackground(String... str) {
-		ByteArrayOutputStream bao = new ByteArrayOutputStream();
-		mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bao);
-
-		byte[] ba = bao.toByteArray();
-		int flag = 0; // you can pass the default 0 = Base64.DEFAULT
-		String ba1 = Base64.encodeToString(ba, flag);
-
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("data", ba1));
+		nameValuePairs.add(new BasicNameValuePair("data", imageBase64));
 
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(mUrl);
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);
-			String result = convertResponseToString(response);
-			return result;
+			httpStatusCode = response.getStatusLine().getStatusCode();
+
+			if (httpStatusCode == 200) {
+				return convertResponseToString(response);
+			}
 		} catch (Exception e) {
+			if (e instanceof HttpHostConnectException) {
+				httpStatusCode = 404;
+				return "Not Found";
+			}
 			Log.e("log_tag", "Error in http connection " + e.toString());
 		}
 		return null;
@@ -82,13 +81,14 @@ public class UploadImageTask extends AsyncTask<String, Void, String> {
 	@Override
 	protected void onPostExecute(String result) {
 		if (result == null) {
-			mCallback.onUploadCompleted(false, null);
+			mCallback.onUploadCompleted(false, result, httpStatusCode);
 		} else {
-			mCallback.onUploadCompleted(true, result);
+			mCallback.onUploadCompleted(true, result, 200);
 		}
 	}
 
 	public interface UploadImageTaskCallback {
-		public void onUploadCompleted(boolean success, String result);
+		public void onUploadCompleted(boolean success, String result,
+				int httpStatusCode);
 	}
 }
