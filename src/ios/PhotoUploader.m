@@ -24,6 +24,9 @@
 -(void) uploadImage:(UIImage*) image toUrl:(NSString*)url
 {
     NSString *imageString = [self base64StringFromImage:image];
+    
+    CGFloat w = image.size.width;
+    CGFloat h = image.size.height;
     imageString = [imageString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
     
     NSString *paramDataString = [NSString stringWithFormat:@"data=%@",imageString];
@@ -87,6 +90,20 @@
 
 - (UIImage*) resizeImage:(UIImage *)image newWidth:(CGFloat)width newHeight:(CGFloat)height
 {
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]
+        && [[UIScreen mainScreen] scale] == 3.0) {
+        // Retina
+        width = width /3;
+        height = height /3;
+    } else if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]
+               && [[UIScreen mainScreen] scale] == 2.0) {
+        // Retina
+        width = width / 2;
+        height = height / 2 ;
+    } else {
+        // Not Retina
+    }
+    
     CGSize sacleSize = CGSizeMake(width, height);
     UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
     [image drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];

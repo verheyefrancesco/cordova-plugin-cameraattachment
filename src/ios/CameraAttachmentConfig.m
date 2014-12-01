@@ -53,6 +53,6 @@
     self.usePhotoButtonText = @"Use Photo";
     self.retakeButtonText = @"Retake";
     self.uploadingMessage = @"Uploading";
-    self.photoSize = @"large";
+    self.photoSize = @"medium";
 }
 @end

@@ -20,7 +20,11 @@
 
 -(instancetype) initWithConfig:(CameraAttachmentConfig*)config
 {
-    self = [super init];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        self = [super initWithNibName:@"CameraAttachmentViewController" bundle:nil];
+    } else {
+        self = [super initWithNibName:@"CameraAttachmentViewController_iPad" bundle:nil];
+    }
     if(self)
     {
         _config = config;
@@ -87,7 +91,7 @@
     _uploader = [[PhotoUploader alloc] init];
     _uploader.delegate = self;
     
-    _config.photoSize = @"large";
+    _config.photoSize = @"medium";
     
     if([_config.photoSize isEqualToString:@"small"])
     {

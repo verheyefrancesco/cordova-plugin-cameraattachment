@@ -68,6 +68,7 @@
         <header-file src="src/ios/CameraAttachmentConfig.h" />
         <source-file src="src/ios/CameraAttachmentConfig.m" />
 		<resource-file src="src/ios/CameraAttachmentViewController.xib" />
+        <resource-file src="src/ios/CameraAttachmentViewController_iPad.xib" />
 
     </platform>
 

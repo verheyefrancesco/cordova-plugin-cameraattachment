@@ -353,7 +353,7 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 		mOrientationAtTakePicture = mPreview.mTheOrientation;
 
 		mCamera.takePicture(null, null, mPictureCallback);
-		//pause();
+		// pause();
 		btnLeftAction.setText(mConfig.getRetakeButtonText());
 		btnLeftAction.setVisibility(View.VISIBLE);
 		btnTakePicture.setVisibility(View.INVISIBLE);
@@ -401,6 +401,14 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 			int rotation = mPreview.getSurfaceRotation();
 			mBitmap = BitmapUtils.rotateBitmap(mBitmap, rotation);
 
+			int width = camera.getParameters().getPreviewSize().width;
+			int height = camera.getParameters().getPreviewSize().height;
+			Bitmap b = BitmapUtils.resizedBitmap(mBitmap, width, height);
+
+			// b = BitmapUtils.rotateBitmap(b, 90);
+			ivImagePreview.setImageBitmap(b);
+			ivImagePreview.setVisibility(View.VISIBLE);
+
 			try {
 				FileOutputStream out = new FileOutputStream(Environment
 						.getExternalStorageDirectory().getAbsolutePath()
@@ -414,14 +422,6 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 				byte[] ba = bao.toByteArray();
 				int flag = 0; // you can pass the default 0 = Base64.DEFAULT
 				imageBase64 = Base64.encodeToString(ba, flag);
-
-				int width = camera.getParameters().getPreviewSize().width;
-				int height = camera.getParameters().getPreviewSize().height;
-				Bitmap b = BitmapUtils.resizedBitmap(mBitmap, width, height);
-
-				// b = BitmapUtils.rotateBitmap(b, 90);
-				ivImagePreview.setImageBitmap(b);
-				ivImagePreview.setVisibility(View.VISIBLE);
 
 				mBitmap = null;
 				b = null;
