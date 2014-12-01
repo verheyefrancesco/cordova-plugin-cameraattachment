@@ -15,6 +15,9 @@
 -(void) uploadImage:(UIImage*) image andImageWidth:(CGFloat)width andImageHeight:(CGFloat)height toUrl:(NSString*)url
 {
     UIImage *resizedImage = [self resizeImage:image newWidth:width newHeight:height];
+    
+    CGFloat w = resizedImage.size.width;
+    CGFloat h = resizedImage.size.height;
     [self uploadImage:resizedImage toUrl:url];
 }
 
@@ -91,5 +94,6 @@
     UIGraphicsEndImageContext();
     return resizedImage;
 }
+
 
 @end

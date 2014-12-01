@@ -83,7 +83,7 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 		resume();
 	}
 
-	public void resume() {
+	private void resume() {
 		if (mCamera == null) {
 			mCamera = getCameraInstance();
 			setCameraParameters();
@@ -95,7 +95,7 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 		startPreview();
 	}
 
-	public void pause() {
+	private void stop() {
 		releaseCamera();
 		flPreview.removeView(mPreview);
 	}
@@ -274,6 +274,7 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 	private void releaseCamera() {
 		if (mCamera != null) {
 			previewing = false;
+			mCamera.stopPreview();
 			mCamera.setPreviewCallback(null);
 			mCamera.release();
 			mCamera = null;
@@ -348,9 +349,11 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 	}
 
 	private void takePicture() {
+
 		mOrientationAtTakePicture = mPreview.mTheOrientation;
 
 		mCamera.takePicture(null, null, mPictureCallback);
+		//pause();
 		btnLeftAction.setText(mConfig.getRetakeButtonText());
 		btnLeftAction.setVisibility(View.VISIBLE);
 		btnTakePicture.setVisibility(View.INVISIBLE);
@@ -358,7 +361,7 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 	}
 
 	private void cancelTakingPicture() {
-		pause();
+		stop();
 		mCallback.onCancelled();
 	}
 
@@ -432,8 +435,9 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 
 	/* UploadImageTaskCallback callback */
 	@Override
-	public void onUploadCompleted(boolean success, String result, int httpStatusCode) {
-		pause();
+	public void onUploadCompleted(boolean success, String result,
+			int httpStatusCode) {
+		stop();
 		mCallback.onUploadedWithResult(result, httpStatusCode);
 	}
 

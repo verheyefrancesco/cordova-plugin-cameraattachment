@@ -48,11 +48,11 @@ public class UploadImageTask extends AsyncTask<String, Void, String> {
 		} catch (Exception e) {
 			if (e instanceof HttpHostConnectException) {
 				httpStatusCode = 404;
-				return "Not Found";
+				return "error";
 			}
 			Log.e("log_tag", "Error in http connection " + e.toString());
 		}
-		return null;
+		return "error";
 	}
 
 	private String convertResponseToString(HttpResponse response) {
@@ -80,7 +80,7 @@ public class UploadImageTask extends AsyncTask<String, Void, String> {
 
 	@Override
 	protected void onPostExecute(String result) {
-		if (result == null) {
+		if (result.equals("error")) {
 			mCallback.onUploadCompleted(false, result, httpStatusCode);
 		} else {
 			mCallback.onUploadCompleted(true, result, 200);

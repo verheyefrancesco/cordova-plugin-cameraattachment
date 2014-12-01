@@ -87,20 +87,42 @@
     _uploader = [[PhotoUploader alloc] init];
     _uploader.delegate = self;
     
-    if(_config.photoSizeHeight != -1 && _config.photoSizeWidth != -1)
+    _config.photoSize = @"large";
+    
+    if([_config.photoSize isEqualToString:@"small"])
     {
-        UIImageOrientation orient = image.imageOrientation;
-        
-        if(orient == UIImageOrientationUp || orient == UIImageOrientationUpMirrored || orient == UIImageOrientationDown || orient == UIImageOrientationDownMirrored)
-        {
-            [_uploader uploadImage:image andImageWidth:_config.photoSizeWidth andImageHeight:_config.photoSizeHeight toUrl:_config.uploadUrl];
-        } else
-        {
-            [_uploader uploadImage:image andImageWidth:_config.photoSizeHeight andImageHeight:_config.photoSizeWidth toUrl:_config.uploadUrl];
-        }
-    } else
+        [self uploadSmallImage:image];
+    }
+    else if([_config.photoSize isEqualToString:@"medium"])
+    {
+        [self uploadMediumImage:image];
+    }
+    else if([_config.photoSize isEqualToString:@"large"])
     {
         [_uploader uploadImage:image toUrl:_config.uploadUrl];
+    }
+}
+
+-(void) uploadSmallImage:(UIImage*)image
+{
+    if(image.size.width > image.size.height)
+    {
+        [_uploader uploadImage:image andImageWidth:640 andImageHeight:480 toUrl:_config.uploadUrl];
+    } else
+    {
+        [_uploader uploadImage:image andImageWidth:480 andImageHeight:640 toUrl:_config.uploadUrl];
+    }
+}
+
+-(void) uploadMediumImage:(UIImage*)image
+{
+    
+    if(image.size.width > image.size.height)
+    {
+        [_uploader uploadImage:image andImageWidth:1024 andImageHeight:768 toUrl:_config.uploadUrl];
+    } else
+    {
+        [_uploader uploadImage:image andImageWidth:768 andImageHeight:1024 toUrl:_config.uploadUrl];
     }
 }
 
@@ -111,6 +133,15 @@
     {
         [self.delegate cameraAttachmentVC:self onClosed:NO andUploadResult:result];
     }
+}
+
+#pragma mark - Device Orientation
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 @end

@@ -15,8 +15,7 @@
 @property(nonatomic) NSString* usePhotoButtonText;
 @property(nonatomic) NSString* retakeButtonText;
 @property(nonatomic) NSString* uploadingMessage;
-@property(nonatomic) NSInteger photoSizeWidth;
-@property(nonatomic) NSInteger photoSizeHeight;
+@property(nonatomic) NSString* photoSize;
 
 -(instancetype) initWithDictionary:(NSMutableDictionary*)dict;
 @end

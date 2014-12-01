@@ -14,13 +14,14 @@
     android:layout_alignParentTop="true" />
     
     <ImageView
-    android:id="@+id/ivCameraAttachmentPluginTakePreview"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_above="@+id/rlCameraAttachmentPluginActions"
-    android:scaleType="fitXY"
-    android:src="@drawable/icon"
-    android:visibility="invisible" />
+        android:id="@+id/ivCameraAttachmentPluginTakePreview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rlCameraAttachmentPluginActions"
+        android:background="@android:color/black"
+        android:scaleType="fitXY"
+        android:src="@drawable/icon"
+        android:visibility="invisible" />
     
     <RelativeLayout
         android:id="@+id/rlCameraAttachmentPluginActions"

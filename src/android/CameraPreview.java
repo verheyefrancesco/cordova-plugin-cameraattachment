@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.Parameters;
@@ -34,7 +33,7 @@ public class CameraPreview extends SurfaceView implements
 		previewCallback = previewCb;
 		autoFocusCallback = autoFocusCb;
 
-		mIsPhone = true;
+		mIsPhone = false;
 
 		mHolder = getHolder();
 		mHolder.addCallback(this);
@@ -116,50 +115,46 @@ public class CameraPreview extends SurfaceView implements
 		try {
 			// Hard code camera surface rotation 90 degs to match Activity view
 			// in portrait
-			int orientation = mContext.getResources().getConfiguration().orientation;
-
-			switch (((WindowManager) mContext
-					.getSystemService(Context.WINDOW_SERVICE))
-					.getDefaultDisplay().getRotation()) {
-			case Surface.ROTATION_0:
-				mRotation = 90;
-				mTheOrientation = TheOrientation.PORTRAIT;
-				break;
-			case Surface.ROTATION_90:
-				mRotation = 0;
-				mTheOrientation = TheOrientation.LANDSCAPE_LEFT;
-				break;
-			case Surface.ROTATION_180:
-				mRotation = 270;
-				mTheOrientation = TheOrientation.PORTRAIT_UPSIDE_DOWN;
-				break;
-			case Surface.ROTATION_270:
-				mRotation = 180;
-				mTheOrientation = TheOrientation.LANDSCAPE_RIGHT;
-				break;
-			default:
-				mRotation = 90;
-			}
 
 			if (mOrientationCallback != null) {
 				mOrientationCallback.onOrientationChanged(mTheOrientation);
 			}
 
-			mCamera.setDisplayOrientation(mRotation);
-
 			if (mIsPhone) {
-				if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-					// mCamera.setDisplayOrientation(90);
-				} else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-					// mCamera.setDisplayOrientation(180);
+				int orientation = mContext.getResources().getConfiguration().orientation;
+
+				switch (((WindowManager) mContext
+						.getSystemService(Context.WINDOW_SERVICE))
+						.getDefaultDisplay().getRotation()) {
+				case Surface.ROTATION_0:
+					mRotation = 90;
+					mTheOrientation = TheOrientation.PORTRAIT;
+					break;
+				case Surface.ROTATION_90:
+					mRotation = 0;
+					mTheOrientation = TheOrientation.LANDSCAPE_LEFT;
+					break;
+				case Surface.ROTATION_180:
+					mRotation = 270;
+					mTheOrientation = TheOrientation.PORTRAIT_UPSIDE_DOWN;
+					break;
+				case Surface.ROTATION_270:
+					mRotation = 180;
+					mTheOrientation = TheOrientation.LANDSCAPE_RIGHT;
+					break;
+				default:
+					mRotation = 90;
 				}
+				mCamera.setDisplayOrientation(mRotation);
 			} else {
+				mRotation = 0;
 				mCamera.setDisplayOrientation(0);
 				Camera.Parameters parameters = mCamera.getParameters();
 				parameters.set("orientation", "landscape");
 				// set other parameters ..
 				mCamera.setParameters(parameters);
 			}
+
 			mCamera.setPreviewDisplay(mHolder);
 			mCamera.setPreviewCallback(previewCallback);
 			mCamera.startPreview();

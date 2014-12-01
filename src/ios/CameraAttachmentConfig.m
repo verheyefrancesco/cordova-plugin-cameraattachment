@@ -37,14 +37,11 @@
         {
             self.uploadingMessage = [dict objectForKey:@"uploadingMessage"];
         }
-        if([dict objectForKey:@"photoSizeWidth"])
+        if([dict objectForKey:@"photoSize"])
         {
-            self.photoSizeWidth = [[dict objectForKey:@"photoSizeWidth"] integerValue];
+            self.photoSize = [dict objectForKey:@"photoSize"];
         }
-        if([dict objectForKey:@"photoSizeHeight"])
-        {
-            self.photoSizeHeight = [[dict objectForKey:@"photoSizeHeight"] integerValue];
-        }
+        
     }
     return self;
 }
@@ -56,7 +53,6 @@
     self.usePhotoButtonText = @"Use Photo";
     self.retakeButtonText = @"Retake";
     self.uploadingMessage = @"Uploading";
-    self.photoSizeWidth = -1;
-    self.photoSizeHeight = -1;
+    self.photoSize = @"large";
 }
 @end

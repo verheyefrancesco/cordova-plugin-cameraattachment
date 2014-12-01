@@ -15,6 +15,8 @@ public class CameraAttachmentConfig {
 		this.usePhotoButtonText = usePhotoButtonText;
 		this.retakeButtonText = retakeButtonText;
 		this.photoSize = photoSize;
+		
+		this.uploadUrl = "http://192.168.0.107:8500/upload/upload";
 	}
 
 	public String getUploadUrl() {
