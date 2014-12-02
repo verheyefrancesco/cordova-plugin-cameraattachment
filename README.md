@@ -24,13 +24,19 @@ var cancelButtonText = 'Annuleer';
 var usePhotoButtonText = 'Gebruik';
 var retakeButtonText = 'Opnieuw';
 var photoSize = 'medium';
+var argBase64 = 'fileContents';
+var argFileName = 'fileName';
+var fileName = 'demo_image.jpg';
             
 var options = {
     uploadUrl: uploadUrl,
     cancelButtonText: cancelButtonText,
     usePhotoButtonText: usePhotoButtonText,
     retakeButtonText: retakeButtonText,
-    photoSize: photoSize
+    photoSize: photoSize,
+    argBase64: argBase64,
+    argFileName: argFileName,
+    fileName: fileName
 };
 
 cameraAttachmentPlugin.show(options, 
@@ -42,7 +48,7 @@ cameraAttachmentPlugin.show(options,
 ## Options
 
 ### uploadUrl - iOS, Android
-The url to upload the base64 image.
+The url to upload the base64 image. (HTTPPOST)
 
 Type: String
 
@@ -78,6 +84,27 @@ Default: `medium`
 
 Values: `small` | `medium` | `large`
 
+### argBase64 - iOS, Android
+Arg for the base64 parameter in the POST
+
+Type: String
+
+Default: `fileContents`
+
+### argFileName - iOS, Android
+Arg for the fileName parameter in the POST (omit if empty)
+
+Type: String
+
+Default: ``
+
+### fileName - iOS, Android
+The fileName parameter value in the POST
+
+Type: String
+
+Default: ``
+
 ## Requirements
 - PhoneGap 3.0 or newer / Cordova 3.0 or newer
 - Android 2.3.1 or newer / iOS 5 or newer
@@ -90,13 +117,19 @@ var cancelButtonText = 'Annuleer';
 var usePhotoButtonText = 'Gebruik';
 var retakeButtonText = 'Opnieuw';
 var photoSize = 'medium';
+var argBase64 = 'fileContents';
+var argFileName = 'fileName';
+var fileName = 'demo_image.jpg';
             
 var options = {
     uploadUrl: uploadUrl,
     cancelButtonText: cancelButtonText,
     usePhotoButtonText: usePhotoButtonText,
     retakeButtonText: retakeButtonText,
-    photoSize: photoSize
+    photoSize: photoSize,
+    argBase64: argBase64,
+    argFileName: argFileName,
+    fileName: fileName
 };
 
 cameraAttachmentPlugin.show(options, 
