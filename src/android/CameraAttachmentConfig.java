@@ -7,16 +7,21 @@ public class CameraAttachmentConfig {
 	private String usePhotoButtonText = "Use Photo";
 	private String retakeButtonText = "Retake";
 	private String photoSize = "medium"; // "small" - "medium" - "large"
+	private String argBase64 = "fileContents";
+	private String argFileName;
+	private String fileName;
 
 	public CameraAttachmentConfig(String uploadUrl, String cancelButtonText,
-			String usePhotoButtonText, String retakeButtonText, String photoSize) {
+			String usePhotoButtonText, String retakeButtonText,
+			String photoSize, String argBase64, String argFileName, String fileName) {
 		this.uploadUrl = uploadUrl;
 		this.cancelButtonText = cancelButtonText;
 		this.usePhotoButtonText = usePhotoButtonText;
 		this.retakeButtonText = retakeButtonText;
 		this.photoSize = photoSize;
-		
-		//this.uploadUrl = "http://192.168.0.107:8500/upload/upload";
+		this.argBase64 = argBase64;
+		this.argFileName = argFileName;
+		this.fileName = fileName;
 	}
 
 	public String getUploadUrl() {
@@ -49,5 +54,17 @@ public class CameraAttachmentConfig {
 
 	public boolean isPhotoSizeSmall() {
 		return photoSize.equals("small");
+	}
+
+	public String getArgBase64() {
+		return argBase64;
+	}
+
+	public String getArgFileName() {
+		return argFileName;
+	}
+	
+	public String getFileName(){
+		return fileName;
 	}
 }

@@ -19,12 +19,18 @@ public class CameraAttachmentPlugin extends CordovaPlugin implements
 	private static final String ARG_USE_PHOTO_BUTTON_TEXT = "usePhotoButtonText";
 	private static final String ARG_RETAKE_BUTTON_TEXT = "retakeButtonText";
 	private static final String ARG_PHOTO_SIZE = "photoSize";
+	private static final String ARG_ARG_BASE_64 = "argBase64";
+	private static final String ARG_ARG_FILENAME = "argFileName";
+	private static final String ARG_FILENAME = "fileName";
 
 	private String uploadUrl;
 	private String cancelButtonText = "Cancel";
 	private String usePhotoButtonText = "Use Photo";
 	private String retakeButtonText = "Retake";
 	private String photoSize = "medium";
+	private String argBase64 = "fileContents";
+	private String argFileName;
+	private String fileName;
 
 	private CameraAttachmentConfig mConfig;
 
@@ -73,6 +79,21 @@ public class CameraAttachmentPlugin extends CordovaPlugin implements
 			if (obj.has(ARG_PHOTO_SIZE)) {
 				photoSize = obj.getString(ARG_PHOTO_SIZE);
 			}
+			if (obj.has(ARG_ARG_BASE_64)) {
+				argBase64 = obj.getString(ARG_ARG_BASE_64);
+			}
+			if (obj.has(ARG_ARG_FILENAME)) {
+				String argfn = obj.getString(ARG_ARG_FILENAME);
+				if (!argfn.equals("")) {
+					argFileName = argfn;
+				}
+			}
+			if (obj.has(ARG_FILENAME)) {
+				String fn = obj.getString(ARG_FILENAME);
+				if (!fn.equals("")) {
+					fileName = fn;
+				}
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -80,7 +101,8 @@ public class CameraAttachmentPlugin extends CordovaPlugin implements
 
 	private void createConfig() {
 		mConfig = new CameraAttachmentConfig(uploadUrl, cancelButtonText,
-				usePhotoButtonText, retakeButtonText, photoSize);
+				usePhotoButtonText, retakeButtonText, photoSize, argBase64,
+				argFileName, fileName);
 	}
 
 	private void showCameraAttachmentDialog() {

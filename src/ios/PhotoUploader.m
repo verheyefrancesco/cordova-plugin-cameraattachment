@@ -13,23 +13,18 @@
 }
 
 -(void) uploadImage:(UIImage*) image andImageWidth:(CGFloat)width andImageHeight:(CGFloat)height toUrl:(NSString*)url
+      withArgBase64:(NSString*)argBase64 andArgFileName:(NSString*)argFileName
 {
     UIImage *resizedImage = [self resizeImage:image newWidth:width newHeight:height];
-    
-    CGFloat w = resizedImage.size.width;
-    CGFloat h = resizedImage.size.height;
-    [self uploadImage:resizedImage toUrl:url];
+    [self uploadImage:resizedImage toUrl:url withArgBase64:argBase64 andArgFileName:argFileName];
 }
 
--(void) uploadImage:(UIImage*) image toUrl:(NSString*)url
+-(void) uploadImage:(UIImage*) image toUrl:(NSString*)url withArgBase64:(NSString*)argBase64 andArgFileName:(NSString*)argFileName
 {
     NSString *imageString = [self base64StringFromImage:image];
-    
-    CGFloat w = image.size.width;
-    CGFloat h = image.size.height;
     imageString = [imageString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
     
-    NSString *paramDataString = [NSString stringWithFormat:@"data=%@",imageString];
+    NSString *paramDataString = [NSString stringWithFormat:@"%@=%@&%@=image.jpg",argBase64, imageString, argFileName];
     NSData* aData = [paramDataString dataUsingEncoding:NSUTF8StringEncoding];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[aData length]];
     

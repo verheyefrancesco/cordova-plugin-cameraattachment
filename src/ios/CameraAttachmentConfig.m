@@ -41,7 +41,6 @@
         {
             self.photoSize = [dict objectForKey:@"photoSize"];
         }
-        
     }
     return self;
 }
@@ -54,5 +53,7 @@
     self.retakeButtonText = @"Retake";
     self.uploadingMessage = @"Uploading";
     self.photoSize = @"medium";
+    self.argBase64 = @"fileContents";
+    self.argFileName = @"fileName";
 }
 @end

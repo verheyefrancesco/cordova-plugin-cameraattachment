@@ -16,6 +16,9 @@
 @property(nonatomic) NSString* retakeButtonText;
 @property(nonatomic) NSString* uploadingMessage;
 @property(nonatomic) NSString* photoSize;
+@property(nonatomic) NSString* argBase64;
+@property(nonatomic) NSString* argFileName;
+
 
 -(instancetype) initWithDictionary:(NSMutableDictionary*)dict;
 @end

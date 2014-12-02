@@ -28,9 +28,6 @@
     if(self)
     {
         _config = config;
-        
-        //_config.photoSizeWidth = -1;
-        //_config.photoSizeHeight = -1;
     }
     return self;
 }
@@ -103,7 +100,7 @@
     }
     else if([_config.photoSize isEqualToString:@"large"])
     {
-        [_uploader uploadImage:image toUrl:_config.uploadUrl];
+        [_uploader uploadImage:image toUrl:_config.uploadUrl withArgBase64:_config.argBase64 andArgFileName:_config.argFileName];
     }
 }
 
@@ -111,10 +108,10 @@
 {
     if(image.size.width > image.size.height)
     {
-        [_uploader uploadImage:image andImageWidth:640 andImageHeight:480 toUrl:_config.uploadUrl];
+        [_uploader uploadImage:image andImageWidth:640 andImageHeight:480 toUrl:_config.uploadUrl withArgBase64:_config.argBase64 andArgFileName:_config.argFileName];
     } else
     {
-        [_uploader uploadImage:image andImageWidth:480 andImageHeight:640 toUrl:_config.uploadUrl];
+        [_uploader uploadImage:image andImageWidth:480 andImageHeight:640 toUrl:_config.uploadUrl withArgBase64:_config.argBase64 andArgFileName:_config.argFileName];
     }
 }
 
@@ -123,10 +120,10 @@
     
     if(image.size.width > image.size.height)
     {
-        [_uploader uploadImage:image andImageWidth:1024 andImageHeight:768 toUrl:_config.uploadUrl];
+        [_uploader uploadImage:image andImageWidth:1024 andImageHeight:768 toUrl:_config.uploadUrl withArgBase64:_config.argBase64 andArgFileName:_config.argFileName];
     } else
     {
-        [_uploader uploadImage:image andImageWidth:768 andImageHeight:1024 toUrl:_config.uploadUrl];
+        [_uploader uploadImage:image andImageWidth:768 andImageHeight:1024 toUrl:_config.uploadUrl withArgBase64:_config.argBase64 andArgFileName:_config.argFileName];
     }
 }
 

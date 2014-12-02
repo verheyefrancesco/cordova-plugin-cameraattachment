@@ -383,7 +383,8 @@ public class CameraAttachmentDialog extends Dialog implements PreviewCallback,
 
 	private void upload() {
 		UploadImageTask uploadTask = new UploadImageTask(this,
-				mConfig.getUploadUrl(), imageBase64);
+				mConfig.getUploadUrl(), imageBase64, mConfig.getArgBase64(),
+				mConfig.getArgFileName(), mConfig.getFileName());
 		uploadTask.execute(new String[] {});
 	}
 

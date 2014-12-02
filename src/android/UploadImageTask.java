@@ -21,19 +21,30 @@ public class UploadImageTask extends AsyncTask<String, Void, String> {
 	private String mUrl;
 	private UploadImageTaskCallback mCallback;
 	private String imageBase64;
+	private String mArgBase64;
+	private String mArgFileName;
+	private String mFileName;
+
 	private int httpStatusCode;
 
 	public UploadImageTask(UploadImageTaskCallback callback, String url,
-			String imageBase64) {
+			String imageBase64, String argBase64, String argFileName,
+			String fileName) {
 		mUrl = url;
 		mCallback = callback;
+		mArgBase64 = argBase64;
+		mArgFileName = argFileName;
+		mFileName = fileName;
 		this.imageBase64 = imageBase64;
 	}
 
 	@Override
 	protected String doInBackground(String... str) {
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("data", imageBase64));
+		nameValuePairs.add(new BasicNameValuePair(mArgBase64, imageBase64));
+		if (mArgFileName != null && mFileName != null) {
+			nameValuePairs.add(new BasicNameValuePair(mArgFileName, mFileName));
+		}
 
 		try {
 			HttpClient httpclient = new DefaultHttpClient();

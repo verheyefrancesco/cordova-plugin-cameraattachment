@@ -20,9 +20,10 @@
 
 @interface PhotoUploader : NSObject <NSURLSessionDataDelegate>
 
--(void) uploadImage:(UIImage*) image toUrl:(NSString*)url;
+-(void) uploadImage:(UIImage*) image toUrl:(NSString*)url withArgBase64:(NSString*)argBase64 andArgFileName:(NSString*)argFileName;
 
--(void) uploadImage:(UIImage*) image andImageWidth:(CGFloat)width andImageHeight:(CGFloat)height toUrl:(NSString*)url;
+-(void) uploadImage:(UIImage*) image andImageWidth:(CGFloat)width andImageHeight:(CGFloat)height
+              toUrl:(NSString*)url withArgBase64:(NSString*)argBase64 andArgFileName:(NSString*)argFileName;
 
 
 @property (nonatomic) id<PhotoUploaderDelegate> delegate;

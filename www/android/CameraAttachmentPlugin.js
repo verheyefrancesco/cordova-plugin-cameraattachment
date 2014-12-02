@@ -16,8 +16,10 @@ CameraAttachmentPlugin.prototype.show = function(options, cb) {
         cancelButtonText : 'Cancel',
         usePhotoButtonText : 'Use Photo',
         retakeButtonText : 'Retake',
-        photoSizeWidth: -1,
-        photoSizeHeight: -1
+        photoSize: 'medium',
+        argBase64: 'fileContents',
+        argFileName: '',
+        fileName: ''
     };
 
 	for (var key in defaults) {

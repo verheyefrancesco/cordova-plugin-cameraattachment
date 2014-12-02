@@ -21,13 +21,6 @@
     [self createConfigWithOptions:options];
     
     [self showCameraAttachmentViewController];
-    
-    /*
-     // B-OFFICE
-     _uploadUrl = @"http://10.0.1.31:8500/upload/upload";
-     // C-OFFICE
-     _uploadUrl = @"http://192.168.9.108/upload/upload";
-     */
 }
 
 -(void) createConfigWithOptions:(NSMutableDictionary*)options
