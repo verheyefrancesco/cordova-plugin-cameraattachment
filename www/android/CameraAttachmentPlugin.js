@@ -30,8 +30,8 @@ CameraAttachmentPlugin.prototype.show = function(options, cb) {
 
 	//this._callback = cb;
 
-	var callback = function(message) {
-		cb(message);
+	var callback = function(json) {
+		cb(JSON.parse(json));
 		/*
 		var status = '' + status;
 		var result = '' + data;

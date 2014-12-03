@@ -42,17 +42,15 @@ CameraAttachmentPlugin.prototype.show = function(options, cb) {
     );
 };
 
-CameraAttachmentPlugin.prototype._photoUploaded = function(result) {
-    result = result.replace(/&#34;/g, "\'");
-
-
+CameraAttachmentPlugin.prototype._photoUploaded = function(json) {
+    json = json.replace(/&#34;/g, '"');
     if (this._callback)
-        this._callback('{\'status\': \'success\', \'data\': \'' + result + '\'}');
+        this._callback({status:'success', data: JSON.parse(json)});
 }
 
 CameraAttachmentPlugin.prototype._photoUploadCanceled = function() {
     if (this._callback)
-        this._callback('{\'status\': \'cancelled\'}');
+        this._callback({status: 'cancelled'});
 }
 
 

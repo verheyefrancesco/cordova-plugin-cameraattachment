@@ -121,16 +121,33 @@ public class CameraAttachmentPlugin extends CordovaPlugin implements
 	/* CameraAttachmentCallback */
 	@Override
 	public void onCancelled() {
-		String message = "{'status': 'cancelled'}";
-		callbackContext.success(message);
+		JSONObject resultObj = new JSONObject();
+		try {
+			resultObj.put("status", "cancelled");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		String result = resultObj.toString();
+		callbackContext.success(result);
 		cameraAttachmentDialog.dismiss();
 	}
 
 	@Override
 	public void onUploadedWithResult(String result, int httpStatusCode) {
-		String message = "{'status': 'success', 'data' : '" + result
-				+ "', 'code':'" + httpStatusCode + "'}";
-		callbackContext.success(message);
+		JSONObject resultObj = new JSONObject();
+		try {
+			resultObj.put("status", "success");
+
+			JSONObject dataResultObj = new JSONObject(result);
+			resultObj.put("data", dataResultObj);
+			resultObj.put("code", httpStatusCode);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		String resultString = resultObj.toString();
+		callbackContext.success(resultString);
 		cameraAttachmentDialog.dismiss();
 	}
 
