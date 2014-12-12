@@ -49,6 +49,12 @@
     [_cameraAttachmentViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
+-(void) cameraAttachmentVC:(CameraAttachmentViewController *)cameraAttachmentVC uploadFailedWithError:(NSString *)errorMessage
+{
+    [self jsUploadFailedWithError:errorMessage];
+    [_cameraAttachmentViewController dismissViewControllerAnimated:YES completion:NULL];
+}
+
 #pragma mark - JS API
 -(void) jsUploadCancelled
 {
@@ -60,6 +66,21 @@
 {
     result = [result stringByReplacingOccurrencesOfString:@"\"" withString:@"&#34;"];
     NSString* jsCallback = [NSString stringWithFormat:@"cameraAttachmentPlugin._photoUploaded(\"%@\");", result];
+    [self.commandDelegate evalJs:jsCallback];
+}
+
+-(void) jsUploadFailedWithError:(NSString*)errorMessage
+{
+    NSMutableDictionary *resultDic = [NSMutableDictionary dictionary];
+    [resultDic setValue:errorMessage forKey:@"message"];
+    
+    NSError * err;
+    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:resultDic options:0 error:&err];
+    NSString * result = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    result = [result stringByReplacingOccurrencesOfString:@"\"" withString:@"&#34;"];
+    
+    NSString* jsCallback = [NSString stringWithFormat:@"cameraAttachmentPlugin._photoUploadedError(\"%@\");", result];
     [self.commandDelegate evalJs:jsCallback];
 }
 

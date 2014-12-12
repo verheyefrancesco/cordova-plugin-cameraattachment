@@ -1,10 +1,3 @@
-/**
-  Phonegap CameraAttachment Plugin
-  https://github.com/francescobitmunks/cordova-plugin-cameraattachment
-
-  MIT Licensed
-*/
-
 var exec = require('cordova/exec');
 /**
  * Constructor
@@ -13,9 +6,6 @@ function CameraAttachmentPlugin() {
     this._callback;
 }
 
-/**
- * show - true to show the ad, false to hide the ad
- */
 CameraAttachmentPlugin.prototype.show = function(options, cb) {
 
     var defaults = {
@@ -29,8 +19,9 @@ CameraAttachmentPlugin.prototype.show = function(options, cb) {
     };
 
     for (var key in defaults) {
-        if (typeof options[key] !== "undefined")
-            defaults[key] = options[key];
+        if (typeof options[key] !== "undefined"){
+          defaults[key] = options[key];
+        }
     }
     this._callback = cb;
 
@@ -38,22 +29,21 @@ CameraAttachmentPlugin.prototype.show = function(options, cb) {
       null, 
       "CameraAttachmentPlugin", 
       "show",
-      [defaults]
-    );
+      [defaults]);
 };
 
 CameraAttachmentPlugin.prototype._photoUploaded = function(json) {
     json = json.replace(/&#34;/g, '"');
-    if (this._callback)
-        this._callback({status:'success', data: JSON.parse(json)});
-}
+    if (this._callback){
+      this._callback({status:'success', data: JSON.parse(json)});
+    }
+};
 
 CameraAttachmentPlugin.prototype._photoUploadCanceled = function() {
-    if (this._callback)
-        this._callback({status: 'cancelled'});
-}
-
-
+    if (this._callback){
+      this._callback({status: 'cancelled'});
+    }
+};
 
 var cameraAttachmentPlugin = new CameraAttachmentPlugin();
 module.exports = cameraAttachmentPlugin;

@@ -88,8 +88,6 @@
     _uploader = [[PhotoUploader alloc] init];
     _uploader.delegate = self;
     
-    _config.photoSize = @"medium";
-    
     if([_config.photoSize isEqualToString:@"small"])
     {
         [self uploadSmallImage:image];
@@ -117,7 +115,6 @@
 
 -(void) uploadMediumImage:(UIImage*)image
 {
-    
     if(image.size.width > image.size.height)
     {
         [_uploader uploadImage:image andImageWidth:1024 andImageHeight:768 toUrl:_config.uploadUrl withArgBase64:_config.argBase64 andArgFileName:_config.argFileName];
@@ -133,6 +130,14 @@
     if(self.delegate)
     {
         [self.delegate cameraAttachmentVC:self onClosed:NO andUploadResult:result];
+    }
+}
+
+-(void) photoUploader:(PhotoUploader *)photoUploader didUploadWithError:(NSString *)errorMessage
+{
+    if(self.delegate)
+    {
+        [self.delegate cameraAttachmentVC:self uploadFailedWithError:errorMessage];
     }
 }
 

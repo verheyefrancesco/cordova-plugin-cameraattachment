@@ -15,6 +15,7 @@
 @protocol CameraAttachmentViewControllerDelegate <NSObject>
 
 -(void) cameraAttachmentVC:(CameraAttachmentViewController*)cameraAttachmentVC onClosed:(BOOL)fromCancel andUploadResult:(NSString*)uploadResult;
+-(void) cameraAttachmentVC:(CameraAttachmentViewController*)cameraAttachmentVC uploadFailedWithError:(NSString*)errorMessage;
 
 @end
 

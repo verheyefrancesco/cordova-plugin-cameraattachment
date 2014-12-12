@@ -14,6 +14,7 @@
 @protocol PhotoUploaderDelegate <NSObject>
 
 -(void) photoUploader:(PhotoUploader*)photoUploader didUploadWithResult:(NSString*)result andSuccess:(BOOL)success;
+-(void) photoUploader:(PhotoUploader*)photoUploader didUploadWithError:(NSString*)errorMessage;
 
 @end
 

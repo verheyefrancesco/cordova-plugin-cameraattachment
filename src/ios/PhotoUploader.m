@@ -70,9 +70,14 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     // The request has failed for some reason!
     // Check the error var
+    NSString *errorMessage = @"Upload failed";
+    NSString *m =[error.userInfo objectForKey:@"NSLocalizedDescription"];
+    if(m){
+        errorMessage = m;
+    }
     if(self.delegate)
     {
-        [self.delegate photoUploader:self didUploadWithResult:nil andSuccess:NO];
+        [self.delegate photoUploader:self didUploadWithError:errorMessage];
     }
 }
 
