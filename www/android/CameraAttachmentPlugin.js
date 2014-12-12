@@ -3,12 +3,8 @@
  * Constructor
  */
 function CameraAttachmentPlugin() {
-  //this._callback;
 }
 
-/**
- * show - true to show the ad, false to hide the ad
- */
 CameraAttachmentPlugin.prototype.show = function(options, cb) {
   
 	var defaults = {
@@ -28,34 +24,15 @@ CameraAttachmentPlugin.prototype.show = function(options, cb) {
 		}
 	}
 
-	//this._callback = cb;
-
 	var callback = function(json) {
 		cb(JSON.parse(json));
-		/*
-		var status = '' + status;
-		var result = '' + data;
-
-		if(status == 'cancelled'){
-			cb('{\'status\': \'cancelled\'}');
-		}
-
-		if(isNaN(code) == true){
-			var returnMessage = '{\'status\': \'' + status + '\', \'data\': \'' + data + '\'}';
-			cb(returnMessage);
-		} else{
-			var returnMessage = '{\'status\': \'' + status + '\', \'data\': \'' + data + '\', \'code\': \'' + code + '\'}';
-			cb(returnMessage);
-		}
-		*/
-	}
+	};
   
 	cordova.exec(callback, 
 		null, 
 		"CameraAttachmentPlugin", 
-		defaults.uploadUrl,
-		[defaults]
-	);
+		"show",
+		[defaults]);
 };
 
 var cameraAttachment = new CameraAttachmentPlugin();
