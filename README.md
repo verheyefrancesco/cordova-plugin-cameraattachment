@@ -1,5 +1,12 @@
 # CameraAttachment Plugin for Cordova/PhoneGap 3.0 (iOS and Android)
 
+![Alt text](/screenshots/iOS/takepicture.PNG?raw=true "iOS - take picture")
+![Alt text](/screenshots/Android/takepicture.png?raw=true "Android - take picture")
+![Alt text](/screenshots/iOS/confirm.PNG?raw=true "iOS - confirm picture")
+![Alt text](/screenshots/Android/confirm.png?raw=true "Android - confirm picture")
+![Alt text](/screenshots/iOS/upload.PNG?raw=true "iOS - upload picture")
+![Alt text](/screenshots/Android/upload.png?raw=true "Android - upload picture")
+
 
 ## Installation
 
